@@ -14,17 +14,13 @@ import com.backend.printmedianenterprise.Services.Category.CategoryService;
 
 import lombok.RequiredArgsConstructor;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class CategoryController {
 
 	private final CategoryService categoryService;
-	
-	public CategoryController(CategoryService categoryService) {
-		super();
-		this.categoryService = categoryService;
-	}
 
 	@CrossOrigin
 	@PostMapping("/category")

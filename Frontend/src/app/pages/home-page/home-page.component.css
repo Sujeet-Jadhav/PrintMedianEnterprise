@@ -36,3 +36,27 @@
   width: 100%; /* Fully underline on hover */
   animation: underlineAnimation 0.3s alternate; /* Apply animation on hover */
 }
+
+/* Carousel image styling for consistent size */
+.carousel-image {
+  width: 800px;
+  height: 400px;
+  object-fit: cover; /* Maintains aspect ratio while filling the container */
+  object-position: center; /* Centers the image within the container */
+  border-radius: 8px; /* Optional: adds rounded corners */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .carousel-image {
+    width: 100%;
+    height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-image {
+    width: 100%;
+    height: 250px;
+  }
+}

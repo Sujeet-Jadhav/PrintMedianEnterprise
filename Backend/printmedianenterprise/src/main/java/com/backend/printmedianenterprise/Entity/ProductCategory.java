@@ -7,11 +7,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
-@Table(name="category")
+@Table(name="product_category")
 @Data
-public class Category {
+public class ProductCategory {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,29 +26,9 @@ public class Category {
 	@Lob
 	private String description;
 
-	public long getId() {
-		return id;
-	}
+    private int status;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    private Date createdAt;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
-	
+    private Date updatedAt;
 }

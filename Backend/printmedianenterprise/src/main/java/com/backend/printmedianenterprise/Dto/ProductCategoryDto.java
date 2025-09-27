@@ -1,7 +1,5 @@
 package com.backend.printmedianenterprise.Dto;
 
-import com.backend.printmedianenterprise.Enum.UserRole;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,17 +7,18 @@ import lombok.Setter;
 @Setter
 @Getter
 @Data
-public class UserDto {
+public class ProductCategoryDto {
 
 	private Long id;
-
-	private String email;
-
-	private String password;
-
+	
 	private String name;
 	
-	private String mobile;
+	private String description;
 
+    private int status;
+
+    private String createdAt;
+
+    private String updatedAt;
 
 }

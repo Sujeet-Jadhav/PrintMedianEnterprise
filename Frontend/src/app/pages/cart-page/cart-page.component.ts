@@ -4,12 +4,11 @@ import { FormsModule } from '@angular/forms';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { CartService } from '../../services/cart/cart.service';
-import { QuotationComponent } from './../../components/quotation/quotation.component';
 
 @Component({
   selector: 'app-cart-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, QuotationComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './cart-page.component.html',
   styleUrl: './cart-page.component.css',
 })

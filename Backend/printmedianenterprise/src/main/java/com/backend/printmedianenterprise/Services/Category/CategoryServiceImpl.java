@@ -14,11 +14,6 @@ public class CategoryServiceImpl implements CategoryService{
 
 	private final CategoryRepository categoryRepository;
 
-	public CategoryServiceImpl(CategoryRepository categoryRepository) {
-		super();
-		this.categoryRepository = categoryRepository;
-	}
-	
 	public Category createCategory(CategoryDto categoryDto) {
 		Category category = new Category();
 		category.setName(categoryDto.getName());

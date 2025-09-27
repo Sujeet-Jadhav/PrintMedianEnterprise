@@ -43,16 +43,6 @@ public class AuthController {
 
 	private final AuthService authService;
 
-	public AuthController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService,
-			UserRepository userRepository, JwtUtil jwtUtil, AuthService authService) {
-		super();
-		this.authenticationManager = authenticationManager;
-		this.userDetailsService = userDetailsService;
-		this.userRepository = userRepository;
-		this.jwtUtil = jwtUtil;
-		this.authService = authService;
-	}
-
 	public static final String TOKEN_PREFIX = "Bearer ";
 	public static final String HEADER_STRING = "Authorization";
 
