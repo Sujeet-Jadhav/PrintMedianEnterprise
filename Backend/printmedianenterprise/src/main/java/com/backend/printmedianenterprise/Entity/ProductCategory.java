@@ -1,14 +1,13 @@
 package com.backend.printmedianenterprise.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -20,15 +19,20 @@ public class ProductCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	private String name;
 	
 	@Lob
 	private String description;
 
-    private int status;
+    @Column(columnDefinition = "int default 1")
+    private int status = 1;
 
-    private Date createdAt;
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
 
-    private Date updatedAt;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
+
