@@ -12,7 +12,6 @@ import com.backend.printmedianenterprise.Repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
