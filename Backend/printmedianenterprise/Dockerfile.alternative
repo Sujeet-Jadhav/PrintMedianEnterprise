@@ -1,0 +1,44 @@
+# Alternative Dockerfile - Uses different base images to avoid Cloudflare CDN issues
+# This should work even when eclipse-temurin images fail to download
+
+# Stage 1: Build the application using Amazon Corretto (alternative to Eclipse Temurin)
+FROM amazoncorretto:17 AS build
+
+# Install Maven
+RUN yum install -y tar gzip && \
+    curl -fsSL https://archive.apache.org/dist/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz | tar xz -C /opt && \
+    ln -s /opt/apache-maven-3.9.6 /opt/maven
+
+ENV PATH="${PATH}:/opt/maven/bin"
+
+# Set working directory
+WORKDIR /app
+
+# Copy pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy source code
+COPY src ./src
+
+# Build the application
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the application using Amazon Corretto JRE
+FROM amazoncorretto:17-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy the jar file from build stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose port 8080
+EXPOSE 8080
+
+# Set the active profile to docker
+ENV SPRING_PROFILES_ACTIVE=docker
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
+

@@ -1,0 +1,37 @@
+services:
+  # Backend Spring Boot Application
+  backend:
+    build:
+      context: ./Backend/printmedianenterprise
+      dockerfile: Dockerfile
+    container_name: printmedian-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/print_median_enterprise
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SERVER_ADDRESS: 0.0.0.0
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - printmedian-network
+
+  # Frontend Angular Application
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: printmedian-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - printmedian-network
+
+networks:
+  printmedian-network:
+    driver: bridge

@@ -1,0 +1,60 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: printmedian-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: print_median_enterprise
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - printmedian-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Backend Spring Boot Application
+  backend:
+    build:
+      context: ./Backend/printmedianenterprise
+      dockerfile: Dockerfile
+    container_name: printmedian-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/print_median_enterprise
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SERVER_ADDRESS: 0.0.0.0
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - printmedian-network
+
+  # Frontend Angular Application
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: printmedian-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - printmedian-network
+
+networks:
+  printmedian-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

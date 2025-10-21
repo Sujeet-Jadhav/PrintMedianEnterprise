@@ -1,0 +1,24 @@
+# Local Build Dockerfile - Use this when you have network issues
+# First build locally: mvnw.cmd clean package -DskipTests
+# Then build image: docker build -f Dockerfile.local -t printmedian-backend .
+
+FROM openjdk:17-jdk-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy the pre-built jar file
+COPY target/*.jar app.jar
+
+# Expose port 8080
+EXPOSE 8080
+
+# Set the active profile to docker
+ENV SPRING_PROFILES_ACTIVE=docker
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:8080/actuator/health || exit 1
+
+# Run the application with optimized JVM settings
+ENTRYPOINT ["java", "-Xmx512m", "-Xms256m", "-jar", "app.jar"]

@@ -1,0 +1,16 @@
+# Exclude target directory except JAR files
+target/*
+!target/*.jar
+
+.mvn/
+mvnw
+mvnw.cmd
+*.md
+.git
+.gitignore
+*.log
+*.tmp
+.idea
+.vscode
+*.iml
+

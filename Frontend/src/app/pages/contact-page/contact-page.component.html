@@ -7,9 +7,12 @@
       <div class="container">
         <div class="row justify-content-between">
           <!-- Contact Form -->
-          <div class="col-md-12 col-lg-4 col-xl-4">
-            <h2 class="section-title mb-4">Contact Us</h2>
-            <form id="contactForm">
+          <div class="contact-containe col-md-12 col-lg-4 col-xl-4">
+            <div class="contact-header">
+              <h2>Contact Us</h2>
+              <p>Get in touch with us for any inquiries or support</p>
+            </div>
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
               <div class="mb-3">
                 <label for="name" class="form-label">Your Name</label>
                 <input type="text" class="form-control" id="name" required />

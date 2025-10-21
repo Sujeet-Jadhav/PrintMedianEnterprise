@@ -1,0 +1,35 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 903B 0.1s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/nginx:alpine
+#2 DONE 0.8s
+
+#3 [internal] load metadata for docker.io/library/node:20-alpine
+#3 DONE 0.8s
+
+#4 [build 1/6] FROM docker.io/library/node:20-alpine@sha256:1ab6fc5a31d515dc7b6b25f6acfda2001821f2c2400252b6cb61044bd9f9ad48
+#4 resolve docker.io/library/node:20-alpine@sha256:1ab6fc5a31d515dc7b6b25f6acfda2001821f2c2400252b6cb61044bd9f9ad48 0.1s done
+#4 DONE 0.5s
+
+#5 [build 2/6] WORKDIR /app
+#5 DONE 0.2s
+
+#6 [stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:61e01287e546aac28a3f56839c136b31f590273f3b41187a36f46f6a03bbfe22
+#6 resolve docker.io/library/nginx:alpine@sha256:61e01287e546aac28a3f56839c136b31f590273f3b41187a36f46f6a03bbfe22 0.1s done
+#6 DONE 0.9s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 195B done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 29.34MB 1.7s done
+#8 DONE 1.7s
+
+#9 [build 3/6] COPY package*.json ./
+#9 DONE 0.1s
+
+#10 [build 4/6] RUN npm ci --legacy-peer-deps --prefer-offline --no-audit --maxsockets 5 ||     npm install --legacy-peer-deps --prefer-offline --no-audit --maxsockets 5
