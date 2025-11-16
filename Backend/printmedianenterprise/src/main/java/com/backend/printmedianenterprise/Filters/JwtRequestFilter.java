@@ -37,15 +37,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			userName = jwtUtil.extractUserName(token);
 		}
 		
-		if(authHeader!=null && SecurityContextHolder.getContext().getAuthentication() == null) {
+		if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = userDetailService.loadUserByUsername(userName);
 			
 			if(jwtUtil.validateTokens(token, userDetails)) {
-				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,null);
+				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authToken);
 			}
 		}
 		filterChain.doFilter(request, response);
+	}
+
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+		String path = request.getRequestURI();
+		return path.startsWith("/api/auth/") ||
+		       path.startsWith("/order/");
 	}
 }

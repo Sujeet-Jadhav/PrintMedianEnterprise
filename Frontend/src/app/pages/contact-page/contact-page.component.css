@@ -1,50 +1,202 @@
-.contact-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
+/* Contact Page Styling */
+.contact-page {
+  min-height: 100vh;
 }
 
-.contact-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.contact-header h2 {
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
+/* Contact Form Wrapper */
+.contact-form-wrapper {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  height: 100%;
 }
 
 .contact-form {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
 }
 
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
-  display: block;
+/* Form Labels */
+.form-label {
+  color: #2c3e50;
   margin-bottom: 0.5rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Modern Input Styling */
+.form-control-modern {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
   color: #2c3e50;
 }
 
-.form-control {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+.form-control-modern::placeholder {
+  color: #adb5bd;
+  font-size: 0.95rem;
 }
 
-.form-control:focus {
+.form-control-modern:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-control-modern:hover:not(:focus) {
+  border-color: #b8c0c8;
+}
+
+.form-control-modern.ng-invalid.ng-touched {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+}
+
+.form-control-modern.ng-valid.ng-touched {
+  border-color: #28a745;
+  background-color: #f0fff4;
+}
+
+/* Textarea specific styling */
+textarea.form-control-modern {
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+/* Error Messages */
+.error-message {
+  display: block;
+}
+
+.error-message small {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Contact Info Card */
+.contact-info-card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.contact-info-item {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.contact-info-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.contact-info-item h5 {
+  font-size: 1.1rem;
+}
+
+.contact-info-item p {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.contact-info-item a:hover {
+  color: #007bff !important;
+  text-decoration: underline !important;
+}
+
+/* Map Container */
+.map-container {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Button Styling */
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Alert Styling */
+.alert {
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+  .contact-form-wrapper {
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-info-card {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .contact-form-wrapper {
+    padding: 1.5rem;
+  }
+
+  .contact-page .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .btn-lg {
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+/* Icon Styling */
+i.bi {
+  font-size: 1.2rem;
+}
+
+/* Spinner Animation */
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.15em;
 }
 
 .form-control.error {
@@ -53,8 +205,42 @@
 
 .error-message {
   color: #dc3545;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+  display: block;
+  font-weight: 500;
+}
+
+.error-message small {
+  display: block;
+}
+
+/* Modern Button Styling */
+.btn-modern {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary.btn-modern {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.btn-primary.btn-modern:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-primary.btn-modern:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
 }
 
 .btn-submit {
@@ -76,6 +262,14 @@
 .btn-submit:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.btn-modern:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.65;
+  box-shadow: none;
 }
 
 .btn-submit.loading {
@@ -87,15 +281,52 @@
 }
 
 .alert {
-  padding: 0.75rem;
-  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
   text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
 }
 
 .alert-success {
   background-color: #d4edda;
   color: #155724;
-  border: 1px solid #c3e6cb;
+  border-left: 4px solid #28a745;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+/* Spinner */
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.15em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 1rem;
+  }
+
+  .contact-form {
+    padding: 1.5rem;
+  }
+
+  .form-control-modern {
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-modern {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+  }
 }
 
 .alert-error {

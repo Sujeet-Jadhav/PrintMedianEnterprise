@@ -27,9 +27,11 @@ public class WebConfiguration {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
+				.cors(AbstractHttpConfigurer::disable) // Allow CORS filter to handle CORS
 				.authorizeHttpRequests(auth -> {
-					auth.requestMatchers("/authenticate", "/sign-up", "/order/**").permitAll();
+					auth.requestMatchers("/api/auth/**", "/order/**").permitAll();
 					auth.requestMatchers("/api/**").authenticated();
+					auth.anyRequest().permitAll(); // Allow any other request not matched above
 				})
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);

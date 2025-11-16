@@ -14,10 +14,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.backend.printmedianenterprise.Dto.AuthenticationRequest;
 import com.backend.printmedianenterprise.Dto.SignupRequest;
@@ -29,10 +26,13 @@ import com.backend.printmedianenterprise.Util.JwtUtil;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/auth")
+@Slf4j
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -46,14 +46,23 @@ public class AuthController {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    @PostMapping("/authenticate")
-    public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest,
-                                          HttpServletResponse response) throws IOException {
+    @PostMapping("/login")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
+        log.info("Authentication request received for user: {}", authenticationRequest.getUserName());
         try {
+            // Verify user exists before attempting authentication
+            Optional<User> preUser = userRepository.findFirstByEmail(authenticationRequest.getUserName());
+            if (preUser.isEmpty()) {
+                log.warn("Authentication failed: user not found: {}", authenticationRequest.getUserName());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "User not found"));
+            }
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getUserName(), authenticationRequest.getPassword()));
         } catch (BadCredentialsException excep) {
-            throw new BadCredentialsException("Incorrect Username and Password");
+            log.error("Authentication failed for user: {}", authenticationRequest.getUserName());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Incorrect Username and Password"));
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUserName());
@@ -64,23 +73,38 @@ public class AuthController {
             Map<String, Object> body = new HashMap<>();
             body.put("userId", optionalUser.get().getId());
             body.put("role", optionalUser.get().getRole());
-            response.getWriter().write(MAPPER.writeValueAsString(body));
+            body.put("token", jwt);
+//            body.put("tokenType", "Bearer");
+
+            log.info("Authentication successful for user: {}", authenticationRequest.getUserName());
+            return ResponseEntity.ok()
+                    .header(HEADER_STRING, TOKEN_PREFIX + jwt)
+                    .header("Access-Control-Expose-Headers", "Authorization")
+                    .body(body);
         }
 
-        response.addHeader("Access-Control-Expose-Headers", "Authorization");
-        response.addHeader("Access-Control-Allow-Headers", "Authorization, X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept, X-Custom-header");
-
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + jwt);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "User not found"));
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("/sign_up")
     public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) {
+        log.info("Sign-up request received for email: {}", signupRequest.getEmail());
         if(authService.hasUserWithEmail(signupRequest.getEmail())) {
+            log.warn("Sign-up failed: User already exists with email: {}", signupRequest.getEmail());
             return new ResponseEntity<>("User Already Exists",HttpStatus.NOT_ACCEPTABLE);
         }
 
         UserDto userDto = authService.createUser(signupRequest);
+        log.info("User created successfully with email: {}", signupRequest.getEmail());
         return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception e) {
+        log.error("Exception in AuthController: ", e);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error: " + e.getMessage());
     }
 
 }

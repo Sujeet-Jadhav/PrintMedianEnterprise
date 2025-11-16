@@ -1,0 +1,132 @@
+/* Services Section Styling */
+.section {
+  position: relative;
+}
+
+.service-card {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.service-card h3 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.service-card i {
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover i {
+  transform: scale(1.1);
+}
+
+/* Products & Services List Section */
+.services-container {
+  width: 100%;
+}
+
+.services-list-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.services-list-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.2);
+  background: #ffffff;
+}
+
+.services-list-card h4 {
+  font-size: 1.15rem;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.75rem;
+}
+
+.services-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.services-list li {
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #333;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.services-list li:last-child {
+  border-bottom: none;
+}
+
+.services-list li:hover {
+  padding-left: 0.5rem;
+  color: #007bff;
+}
+
+.services-list li i {
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+.services-list li:hover i {
+  transform: scale(1.2);
+}
+
+/* Call to Action Button */
+.btn-primary {
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+  .service-card {
+    margin-bottom: 1.5rem;
+  }
+
+  .services-list-card {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .service-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .service-card p {
+    font-size: 0.9rem;
+  }
+
+  .service-card i {
+    font-size: 2.5rem !important;
+  }
+
+  .services-list-card h4 {
+    font-size: 1rem;
+  }
+
+  .services-list li {
+    font-size: 0.9rem;
+  }
+}

@@ -5,7 +5,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ContactRequest, ContactUsService } from '../../contact-us.service';
+import { ContactRequest, ContactUsService } from '../../services/contact-us/contact-us.service';
 import { CommonModule } from '@angular/common';
 
 @Component({

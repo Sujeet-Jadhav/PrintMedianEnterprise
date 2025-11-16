@@ -1,0 +1,143 @@
+<div class="job-management-container">
+    <!-- Header -->
+    <div class="page-header">
+        <h1>Pixel Copiers</h1>
+    </div>
+
+    <!-- Add New Job Section -->
+    <div class="add-job-section">
+        <h2>Add New Job</h2>
+        <form [formGroup]="addJobForm" (ngSubmit)="onAddJob()">
+            <div class="form-group">
+                <input type="text" formControlName="clientName" placeholder="Client Name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="text" formControlName="particulars" placeholder="Particulars" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="number" formControlName="amount" placeholder="Amount (INR)" class="form-control" />
+            </div>
+
+            <button type="submit" class="btn-add-job" [disabled]="!addJobForm.valid">
+                Add Job
+            </button>
+        </form>
+    </div>
+
+    <!-- Jobs Lists Section -->
+    <div class="jobs-container">
+        <!-- Pending Jobs -->
+        <div class="jobs-column pending-column">
+            <h2 class="column-title pending-title">Pending Jobs</h2>
+
+            <div class="search-container">
+                <input type="text" [(ngModel)]="pendingSearchTerm" (input)="onSearchPending()"
+                    placeholder="Search pending jobs..." class="search-input" />
+                <span class="search-icon">🔍</span>
+            </div>
+
+            <div class="jobs-list">
+                @for (job of filteredPendingJobs; track job.serialNumber) {
+                <div class="job-card">
+                    <div class="job-header">
+                        <span class="job-serial">S.No. {{ job.serialNumber }}</span>
+                        <span class="job-date">{{ job.createdAt | date:'MM/dd/yyyy' }}</span>
+                    </div>
+
+                    <div class="job-body">
+                        <p class="job-client"><strong>Client:</strong> {{ job.clientName }}</p>
+                        <p class="job-particulars">Particulars: {{ job.description }}</p>
+                        <p class="job-amount">Amount: ₹{{ job.amount }}</p>
+                    </div>
+
+                    <div class="job-actions">
+                        <button class="btn-status btn-job-completed" (click)="markAsCompleted(job)">
+                            ✓ Job: Completed
+                        </button>
+
+                        <button class="btn-status btn-payment-pending">
+                            ₹ Payment: Pending
+                        </button>
+
+                        <select class="payment-dropdown" [value]="job.paymentStatus"
+                            (change)="updatePaymentStatus(job, $any($event.target).value)">
+                            <option value="pending">Payment Pending</option>
+                            <option value="completed">Payment Completed</option>
+                        </select>
+
+                        <button class="btn-delete" (click)="deleteJob(job, true)" title="Delete Job">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+                }
+
+                @if (filteredPendingJobs.length === 0) {
+                <div class="no-jobs">
+                    <p>No pending jobs found</p>
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- Completed Jobs -->
+        <div class="jobs-column completed-column">
+            <h2 class="column-title completed-title">Completed Jobs</h2>
+
+            <div class="search-container">
+                <input type="text" [(ngModel)]="completedSearchTerm" (input)="onSearchCompleted()"
+                    placeholder="Search completed jobs..." class="search-input" />
+                <span class="search-icon">🔍</span>
+            </div>
+
+            <div class="jobs-list">
+                @for (job of filteredCompletedJobs; track job.serialNumber) {
+                <div class="job-card">
+                    <div class="job-header">
+                        <span class="job-serial">S.No. {{ job.serialNumber }}</span>
+                        <span class="job-date">{{ job.createdAt | date:'MM/dd/yyyy' }}</span>
+                    </div>
+
+                    <div class="job-body">
+                        <p class="job-client"><strong>Client:</strong> {{ job.clientName }}</p>
+                        <p class="job-particulars">Particulars: {{ job.description }}</p>
+                        <p class="job-amount">Amount: ₹{{ job.amount }}</p>
+                    </div>
+
+                    <div class="job-actions">
+                        <button class="btn-status btn-job-completed">
+                            ✓ Job: Completed
+                        </button>
+
+                        <button class="btn-status btn-payment-completed">
+                            ₹ Payment: Completed
+                        </button>
+
+                        <button class="btn-mark-pending" (click)="markAsPending(job)">
+                            Mark Job Pending
+                        </button>
+
+                        <select class="payment-dropdown" [value]="job.paymentStatus"
+                            (change)="updatePaymentStatus(job, $any($event.target).value)">
+                            <option value="pending">Payment Pending</option>
+                            <option value="completed">Payment Completed</option>
+                        </select>
+
+                        <button class="btn-delete" (click)="deleteJob(job, false)" title="Delete Job">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+                }
+
+                @if (filteredCompletedJobs.length === 0) {
+                <div class="no-jobs">
+                    <p>No completed jobs found</p>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -53,35 +53,39 @@
       </div>
     </div>
 
-    <div id="contentToConvert" class="table-responsive col-4 col-sm-4 col-md-4 col-lg-4 ">
-      <div class="container-fluid">
-        <h4 class="mb-3">Price Details</h4>
-        <hr>
-        <table class="table table-hover table-borderless">
-          <tbody>
-            <tr class="mb-3">
-              <th scope="col">Items</th>
-              <th></th>
-              <td scope="col">{{totalItems}}</td>
-            </tr>
-            <tr class="mb-3">
-              <th scope="row">Price</th>
-              <td></td>
-              <td>{{productPrice}}</td>
-            </tr>
-            <tr class="mb-3">
-              <th scope="row">Discount</th>
-              <td></td>
-              <td>{{(productPrice>1000)?discount:0}}</td>
-            </tr>
-            <hr style="width: 150%;">
-            <tr class="mb-3">
-              <th scope="row">Total</th>
-              <td></td>
-              <th colspan="2">{{totalPrice}}</th>
-            </tr>
-          </tbody>
-        </table>
+    <div id="contentToConvert" class="col-4 col-sm-4 col-md-4 col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Price Details</h4>
+        </div>
+        <div class="card-body">
+          <table class="table table-borderless mb-0">
+            <tbody>
+              <tr>
+                <th scope="row">Items</th>
+                <td class="text-end">{{totalItems}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Subtotal</th>
+                <td class="text-end">₹ {{productPrice.toFixed(2)}}</td>
+              </tr>
+              <tr *ngIf="productPrice > 1000">
+                <th scope="row" class="text-success">Discount</th>
+                <td class="text-end text-success">- ₹ {{discount.toFixed(2)}}</td>
+              </tr>
+              <tr *ngIf="productPrice <= 1000">
+                <th scope="row">Discount</th>
+                <td class="text-end">₹ 0.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer bg-light">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Total Amount</h5>
+            <h5 class="mb-0 text-primary">₹ {{totalPrice.toFixed(2)}}</h5>
+          </div>
+        </div>
       </div>
     </div>
     <div class="contianer d-flex flex-row-reverse">

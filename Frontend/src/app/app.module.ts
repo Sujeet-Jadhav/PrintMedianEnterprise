@@ -15,6 +15,7 @@ import { ErrorComponent } from './pages/error-page/error.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
+import { JobManagementPageComponent } from './pages/job-management-page/job-management-page.component';
 
 @NgModule({
   declarations: [], // Components, directives, and pipes that belong to this module
@@ -37,6 +38,7 @@ import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.co
     ProductPageComponent,
     QuotationComponent,
     DashboardPageComponent,
+    JobManagementPageComponent,
   ], // Other modules whose features we need
 })
 export class AppModule {}

@@ -36,11 +36,12 @@ public class SimpleCorFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		Map<String,String> map = new HashMap<String, String>();
 		String originHeader = request.getHeader("origin");
-		response.setHeader("Access-Control-Allow-Origin", originHeader);
-		response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+		response.setHeader("Access-Control-Allow-Origin", originHeader != null ? originHeader : "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, PATCH");
 		response.setHeader("Access-Control-Max-Age", "3600");
-		response.setHeader("Access-Control-Allow-Headers", "*");
-		
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+
 		if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
 			response.setStatus(HttpServletResponse.SC_OK);
 		} else {

@@ -13,5 +13,4 @@ public class AuthenticationRequest {
 	
 	private String password;
 
-
 }
