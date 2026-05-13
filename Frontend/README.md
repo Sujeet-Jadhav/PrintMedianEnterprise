@@ -78,3 +78,72 @@ After installation don't forget to import packages in `angular.json`
 "node_modules/@popperjs/core/dist/umd/popper.min.js",
 "node_modules/bootstrap/dist/js/bootstrap.min.js"
 ]`
+
+## Common Angular CLI Commands
+
+Here are some commonly used Angular CLI commands to generate different parts of your application:
+
+- **Generate a new component:**
+    ```bash
+    ng generate component component-name
+    # or shorthand
+    ng g c component-name
+    ```
+
+- **Generate a new service:**
+    ```bash
+    ng generate service service-name
+    # or shorthand
+    ng g s service-name
+    ```
+
+- **Generate a new module:**
+    ```bash
+    ng generate module module-name
+    # or shorthand
+    ng g m module-name
+    ```
+
+- **Generate a new directive:**
+    ```bash
+    ng generate directive directive-name
+    # or shorthand
+    ng g d directive-name
+    ```
+
+- **Generate a new pipe:**
+    ```bash
+    ng generate pipe pipe-name
+    # or shorthand
+    ng g p pipe-name
+    ```
+
+- **Generate a new class:**
+    ```bash
+    ng generate class class-name
+    # or shorthand
+    ng g cl class-name
+    ```
+
+- **Generate a new interface:**
+    ```bash
+    ng generate interface interface-name
+    # or shorthand
+    ng g i interface-name
+    ```
+
+- **Generate a new enum:**
+    ```bash
+    ng generate enum enum-name
+    # or shorthand
+    ng g e enum-name
+    ```
+
+- **Generate a new guard:**
+    ```bash
+    ng generate guard guard-name
+    # or shorthand
+    ng g g guard-name
+    ```
+
+Refer to the [Angular CLI documentation](https://angular.io/cli/generate) for more details and options.

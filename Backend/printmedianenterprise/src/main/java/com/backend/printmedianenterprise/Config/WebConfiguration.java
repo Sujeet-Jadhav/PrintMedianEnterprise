@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,17 +23,19 @@ import lombok.RequiredArgsConstructor;
 public class WebConfiguration {
 
 	private final JwtRequestFilter authFilter;
-	
-	public WebConfiguration(JwtRequestFilter authFilter) {
-		super();
-		this.authFilter = authFilter;
-	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.csrf().disable().authorizeHttpRequests().requestMatchers("/authenticate","/sign-up","/order/**").permitAll().and().authorizeHttpRequests()
-				.requestMatchers("/api/**").authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilterBefore(authFilter,UsernamePasswordAuthenticationFilter.class)
-				.build();
+		http.csrf(AbstractHttpConfigurer::disable)
+				.cors(AbstractHttpConfigurer::disable) // Allow CORS filter to handle CORS
+				.authorizeHttpRequests(auth -> {
+					auth.requestMatchers("/api/auth/**", "/order/**").permitAll();
+					auth.requestMatchers("/api/**").authenticated();
+					auth.anyRequest().permitAll(); // Allow any other request not matched above
+				})
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+		return http.build();
 	}
 	
 	@Bean

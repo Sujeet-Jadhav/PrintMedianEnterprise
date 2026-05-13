@@ -1,0 +1,336 @@
+// Job Management Page Styles
+
+.job-management-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+}
+
+// Header
+.page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        color: white;
+        text-align: center;
+        margin: 0;
+        font-size: 2.5rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        border-bottom: 3px solid #4a5568;
+        padding-bottom: 15px;
+    }
+}
+
+// Add New Job Section
+.add-job-section {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        color: #2d3748;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-control {
+        padding: 12px 15px;
+        border: 1px solid #cbd5e0;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+
+        &:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        &::placeholder {
+            color: #a0aec0;
+        }
+    }
+
+    .btn-add-job {
+        padding: 12px 24px;
+        background-color: #48bb78;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: fit-content;
+
+        &:hover:not(:disabled) {
+            background-color: #38a169;
+        }
+
+        &:disabled {
+            background-color: #cbd5e0;
+            cursor: not-allowed;
+        }
+    }
+}
+
+// Jobs Container
+.jobs-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.jobs-column {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+}
+
+.column-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    text-align: center;
+
+    &.pending-title {
+        color: #e53e3e;
+        border-bottom: 3px solid #fc8181;
+    }
+
+    &.completed-title {
+        color: #38a169;
+        border-bottom: 3px solid #68d391;
+    }
+}
+
+// Search Container
+.search-container {
+    position: relative;
+    margin-bottom: 20px;
+
+    .search-input {
+        width: 100%;
+        padding: 10px 40px 10px 15px;
+        border: 1px solid #cbd5e0;
+        border-radius: 4px;
+        font-size: 0.95rem;
+
+        &:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #a0aec0;
+    }
+}
+
+// Jobs List
+.jobs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+// Job Card
+.job-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 20px;
+    background: #fafafa;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e2e8f0;
+
+    .job-serial {
+        font-weight: 700;
+        color: #2d3748;
+        font-size: 1.1rem;
+    }
+
+    .job-date {
+        color: #718096;
+        font-size: 0.9rem;
+    }
+}
+
+.job-body {
+    margin-bottom: 15px;
+
+    p {
+        margin: 8px 0;
+        color: #4a5568;
+        font-size: 0.95rem;
+    }
+
+    .job-client {
+        font-size: 1rem;
+        color: #2d3748;
+    }
+
+    .job-amount {
+        font-weight: 600;
+        color: #2d3748;
+    }
+}
+
+// Job Actions
+.job-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-status {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: default;
+    color: white;
+    transition: all 0.3s;
+
+    &.btn-job-completed {
+        background-color: #48bb78;
+    }
+
+    &.btn-payment-pending {
+        background-color: #ed8936;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #dd6b20;
+        }
+    }
+
+    &.btn-payment-completed {
+        background-color: #4299e1;
+    }
+}
+
+.btn-mark-pending {
+    padding: 8px 16px;
+    background-color: #805ad5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #6b46c1;
+    }
+}
+
+.payment-dropdown {
+    padding: 8px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    background-color: white;
+    transition: border-color 0.3s;
+
+    &:focus {
+        outline: none;
+        border-color: #667eea;
+    }
+}
+
+.btn-delete {
+    padding: 8px 12px;
+    background-color: #f56565;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    margin-left: auto;
+
+    &:hover {
+        background-color: #e53e3e;
+    }
+}
+
+// No Jobs Message
+.no-jobs {
+    text-align: center;
+    padding: 40px 20px;
+    color: #a0aec0;
+    font-size: 1.1rem;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+    .job-management-container {
+        padding: 10px;
+    }
+
+    .page-header h1 {
+        font-size: 2rem;
+    }
+
+    .add-job-section {
+        padding: 20px;
+    }
+
+    .job-actions {
+        flex-direction: column;
+        align-items: stretch;
+
+        .btn-delete {
+            margin-left: 0;
+        }
+    }
+}

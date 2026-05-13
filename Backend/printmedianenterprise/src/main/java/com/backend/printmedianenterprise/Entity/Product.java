@@ -43,6 +43,6 @@ public class Product {
 	@JoinColumn(name="category_id",nullable = false)
 	@OnDelete(action=OnDeleteAction.CASCADE)
 	@JsonIgnore 
-	private Category category;
+	private ProductCategory category;
 	
 }

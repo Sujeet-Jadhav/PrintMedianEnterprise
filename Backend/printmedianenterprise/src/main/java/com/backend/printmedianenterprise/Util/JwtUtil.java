@@ -6,14 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.stereotype.Component;
-
-import com.backend.printmedianenterprise.Entity.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
@@ -22,15 +18,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Component
 public class JwtUtil {
 
-	public static final String SECRET = "123456789123456789123456789123456789123456789123456789123456789123456789123456789123456789";
+	public static final String SECRET = "PrintMedianEnterpriseUNDERPixelCopiersBYSujeet";
 	
 	public String generateToken(String userName) {
-		Map<String,Object> claims = new HashMap<String, Object>();
+		Map<String,Object> claims = new HashMap<>();
 		 return createToken(claims,userName);
 	}
 
 	private String createToken(Map<String, Object> claims, String userName) {
-		return Jwts.builder().setClaims(claims).setSubject(userName).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() +1000*60*30)).signWith(getSignKey(),SignatureAlgorithm.HS256).compact();
+		return Jwts.builder()
+				.claims(claims)
+				.subject(userName)
+				.issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30)) // 30 days
+				.signWith(getSignKey())
+				.compact();
 	}
 	
 	private Key getSignKey() {
@@ -48,7 +50,11 @@ public class JwtUtil {
 	}
 	
 	private Claims extractAllClaims(String token) {
-		return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
+		return Jwts.parser()
+				.verifyWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET)))
+				.build()
+				.parseSignedClaims(token)
+				.getPayload();
 	}
 	
 	private Boolean isTokenExpired(String token) {

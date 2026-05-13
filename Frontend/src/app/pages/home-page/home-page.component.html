@@ -8,21 +8,21 @@
         </div>
         <div class="carousel-inner" data-bs-interval="5000">
             <div class="carousel-item active">
-                <img src="../../../assets/images/Slide1.jpg" class="d-block mx-auto w-50" alt="...">
+                <img src="../../../assets/images/Slide1.jpg" class="d-block mx-auto carousel-image" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Print Median Enterprises</h5>
                     <p>Printing Excellence Since 2012.</p>
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="5000">
-                <img src="../../../assets/images/Slide2.jpg" class="d-block mx-auto w-50" alt="...">
+                <img src="../../../assets/images/Slide2.jpg" class="d-block mx-auto carousel-image" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Print Median Enterprises</h5>
                     <p>Printing Excellence Since 2012.</p>
                 </div>
             </div>
             <div class="carousel-item" data-bs-interval="5000">
-                <img src="../../../assets/images/Slide3.jpg" class="d-block mx-auto w-50" alt="...">
+                <img src="../../../assets/images/Slide3.jpg" class="d-block mx-auto carousel-image" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Print Median Enterprises</h5>
                     <p>Printing Excellence Since 2012.</p>
@@ -65,7 +65,16 @@
     </div>
 </div>
 
-<div class="bg-dark text-light my-3">{{category}}</div>
+<div class="container my-3">
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <h2 class="fw-bold text-uppercase text-center px-5 py-2 rounded-pill bg-warning text-dark border border-2 border-dark shadow-lg"
+                style="letter-spacing:3px; font-family:'Segoe UI', Arial, sans-serif;">
+                {{ category }}
+            </h2>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
