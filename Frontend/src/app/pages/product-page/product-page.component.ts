@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CartService } from '../../services/cart/cart.service';
-import { ProductDetailsService } from '../../services/product/product-details.service';
 
 @Component({
   selector: 'app-product-page',
@@ -15,16 +14,15 @@ export class ProductPageComponent {
   products: any;
 
   constructor(
-    private productService: ProductDetailsService,
     private cartService: CartService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getProductDetails();
   }
 
   getProductDetails(): void {
-    this.products = this.productService.getProduct();
+    this.products = JSON.parse(localStorage.getItem('product'));
   }
 
   addToCart() {

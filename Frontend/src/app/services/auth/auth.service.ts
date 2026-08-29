@@ -1,8 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { UserStorageService } from './../storage/user-storage.service';
 import { environment } from '../../../environments/environment';
+import { HttpService } from '../../../services/http-service.service';
 
 // const url = 'http://localhost:8080/';
 
@@ -10,18 +11,17 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = environment.apiEndpoint + '/auth/';
   constructor(
-    private http: HttpClient,
+    private httpService: HttpService,
     private userStorageService: UserStorageService
-  ) {}
+  ) { }
 
   login(userName: string, password: string): any {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const body = { userName, password };
 
-    return this.http
-      .post(this.baseUrl + 'login', body, { headers, observe: 'response' })
+    return (this.httpService
+      .post('api/auth/login', body, { headers, observe: 'response' }) as unknown as Observable<HttpResponse<any>>)
       .pipe(
         map((res) => {
           const token = res.headers.get('authorization')?.substring(7);
@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   register(signupRequest: any): Observable<any> {
-    return this.http.post(this.baseUrl + 'sign_up', signupRequest).pipe(
+    return this.httpService.post('api/auth/sign_up', signupRequest).pipe(
       catchError((error) => {
         console.error('Error registering user:', error);
         return throwError(() => error);

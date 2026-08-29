@@ -5,8 +5,8 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ContactRequest, ContactUsService } from '../../services/contact-us/contact-us.service';
 import { CommonModule } from '@angular/common';
+import { HttpService } from '../../../services/http-service.service';
 
 @Component({
   selector: 'app-contact-page',
@@ -23,7 +23,7 @@ export class ContactPageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private contactUsService: ContactUsService
+    private httpService: HttpService
   ) {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -33,28 +33,30 @@ export class ContactPageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onSubmit(): void {
     if (this.contactForm.valid && !this.isSubmitting) {
       this.isSubmitting = true;
       this.submitMessage = '';
 
-      const contactData: ContactRequest = this.contactForm.value;
+      const contactData = this.contactForm.value;
 
-      this.contactUsService.sendContactMessage(contactData).subscribe({
-        next: (response) => {
+      this.httpService.post('api/contact/submit_contact', contactData, {
+        headers: { 'Content-Type': 'application/json' }
+      }).subscribe({
+        next: (response: any) => {
           this.submitSuccess = true;
           this.submitMessage = response.message || 'Message sent successfully!';
           this.contactForm.reset();
           this.isSubmitting = false;
         },
-        error: (error) => {
-          this.submitSuccess = false;
-          this.submitMessage =
-            error.error?.message || 'Failed to send message. Please try again.';
-          this.isSubmitting = false;
-        },
+        // error: (error) => {
+        //   this.submitSuccess = false;
+        //   this.submitMessage =
+        //     error.error?.message || 'Failed to send message. Please try again.';
+        //   this.isSubmitting = false;
+        // },
       });
     } else {
       this.markFormGroupTouched();
@@ -71,18 +73,16 @@ export class ContactPageComponent implements OnInit {
   getErrorMessage(fieldName: string): string {
     const field = this.contactForm.get(fieldName);
     if (field?.hasError('required')) {
-      return `${
-        fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
-      } is required`;
+      return `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
+        } is required`;
     }
     if (field?.hasError('email')) {
       return 'Please enter a valid email address';
     }
     if (field?.hasError('minlength')) {
       const requiredLength = field.errors?.['minlength']?.requiredLength;
-      return `${
-        fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
-      } must be at least ${requiredLength} characters`;
+      return `${fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
+        } must be at least ${requiredLength} characters`;
     }
     return '';
   }

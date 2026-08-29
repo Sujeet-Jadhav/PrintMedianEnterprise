@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { UserStorageService } from '../../services/storage/user-storage.service';
 import { Router } from '@angular/router';
-import { ProductDetailsService } from '../../services/product/product-details.service';
 
 @Component({
   selector: 'app-home-page',
@@ -310,12 +309,12 @@ export class HomePageComponent {
   isUserLoggedIn: boolean = UserStorageService.isUserLoggedIn();
   isAdminLoggedIn: boolean = UserStorageService.isAdminLoggedIn();
 
-  constructor(private router: Router, private service: ProductDetailsService) {}
+  constructor(private router: Router) { }
 
   openSubProduct(product: any) {
     const subProductUrl = 'sub-product/' + product.id;
     try {
-      this.service.setProduct(product);
+      localStorage.setItem('product', JSON.stringify(product));
       window.open(subProductUrl, '_parent');
     } catch (error) {
       console.error('Error opening sub-product:', error);

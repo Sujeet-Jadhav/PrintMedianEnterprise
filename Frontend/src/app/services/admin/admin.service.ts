@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserStorageService } from '../storage/user-storage.service';
+import { HttpService } from '../../../services/http-service.service';
 
 const url = 'http://localhost:8080/';
 
@@ -9,10 +10,10 @@ const url = 'http://localhost:8080/';
   providedIn: 'root',
 })
 export class AdminService {
-  constructor(private http: HttpClient) {}
+  constructor(private httpService: HttpService) { }
 
   addCategory(categoryDto: any): Observable<any> {
-    return this.http.post(url + 'api/admin/category', categoryDto, {
+    return this.httpService.post('api/admin/category', categoryDto, {
       headers: this.createAthorizationHeader(),
     });
   }
